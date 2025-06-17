@@ -1,9 +1,13 @@
+// Einfacher Counter-Speicher (für Demo)
+let salesCounter = 0;
+let lastReset = new Date();
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   
-  // Startzeit: JETZT (zum Testen)
-  const START_TIME = new Date('2025-06-17T12:00:00Z'); // Anpassen auf aktuelle Zeit!
+  // Startzeit: Donnerstag 19.06. um 19:00 Uhr
+  const START_TIME = new Date('2025-06-19T17:00:00Z');
   
   if (req.method === 'POST') {
     // Shopify Webhook - neue Bestellung
@@ -12,17 +16,21 @@ export default async function handler(req, res) {
       const orderTime = new Date(order.created_at);
       
       if (orderTime >= START_TIME) {
-        console.log('Neue Bestellung gezählt!', order.order_number);
-        // Hier würden wir den Counter erhöhen (vereinfacht für Test)
+        salesCounter++; // Counter erhöhen!
+        console.log(`Neue Bestellung gezählt! Total: ${salesCounter}, Order: ${order.order_number}`);
       }
       
-      res.status(200).json({ success: true });
+      res.status(200).json({ success: true, count: salesCounter });
     } catch (error) {
       res.status(200).json({ success: true });
     }
   } 
   else if (req.method === 'GET') {
-    // Test-Counter (später echte Zählung)
-    res.status(200).json({ count: 12 }); // Simulierte Verkäufe
+    // Echter Counter zurückgeben
+    res.status(200).json({ 
+      count: salesCounter,
+      startTime: START_TIME,
+      lastUpdate: new Date().toISOString()
+    });
   }
 }
