@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   
   // Startzeit: Donnerstag 19.06. um 19:00 Uhr
-  const START_TIME = new Date('2025-06-19T17:00:00Z');
+  const START_TIME = new Date('2025-06-17T10:00:00Z'); // Heute früh - alles ab jetzt zählt!
   
   if (req.method === 'POST') {
     // Shopify Webhook - neue Bestellung
