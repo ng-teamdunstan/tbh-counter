@@ -1,6 +1,6 @@
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = 'ng-teamdunstan'; // ANPASSEN!
-const REPO_NAME = 'shopify-counter';
+const REPO_NAME = 'tbh-counter';
 const FILE_PATH = 'counter-data.json';
 
 // GitHub API Funktionen
