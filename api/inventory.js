@@ -88,16 +88,21 @@ export default async function handler(req, res) {
     }
 
     // Schritt 4: Nach Datum sortieren (falls möglich)
-    const sortedInventory = tourInventory.sort((a, b) => {
-      // Versuche Datum aus Stadt-String zu extrahieren (z.B. "Hamburg 26.09.")
-      const dateA = a.city.match(/(\d{2}\.\d{2}\.)/);
-      const dateB = b.city.match(/(\d{2}\.\d{2}\.)/);
-      
-      if (dateA && dateB) {
-        return dateA[1].localeCompare(dateB[1]);
-      }
-      return a.city.localeCompare(b.city);
-    });
+const sortedInventory = tourInventory.sort((a, b) => {
+  // Erst nach Verfügbarkeit sortieren (niedrig zu hoch)
+  if (a.available !== b.available) {
+    return a.available - b.available;
+  }
+  
+  // Bei gleicher Verfügbarkeit nach Datum sortieren
+  const dateA = a.city.match(/(\d{2}\.\d{2}\.)/);
+  const dateB = b.city.match(/(\d{2}\.\d{2}\.)/);
+  
+  if (dateA && dateB) {
+    return dateA[1].localeCompare(dateB[1]);
+  }
+  return a.city.localeCompare(b.city);
+});
 
     // Schritt 5: Response zusammenstellen
     const response = {
