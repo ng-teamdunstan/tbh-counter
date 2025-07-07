@@ -27,9 +27,8 @@ export default async function handler(req, res) {
     
     // "CD + Ticket Bundle" Produkt finden
     const bundleProduct = productsData.products.find(product => 
-      product.title.includes('CD + Ticket Bundle') || 
-      product.title.includes('CD + Ticket') ||
-      product.title.includes('Bundle')
+    product.title === 'CD + Ticket Bundle' ||
+    product.title.includes('CD + Ticket Bundle')
     );
 
     if (!bundleProduct) {
